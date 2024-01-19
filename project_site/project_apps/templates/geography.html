@@ -7,10 +7,42 @@
     <link rel="stylesheet" href="{% static 'css/style.css'%}"/>
 </head>
 <body>
-<a href="/">Главная страница</a>
-<a href="/demand">Востребованность</a>
-<a href="/geography">География</a>
-<a href="/skills">Навыки</a>
-<a href="/vacancies">Последние вакансии</a>
+<header class="header">
+    <div class="header__container">
+        <div class="header__wrapper">
+            <!-- header__block -->
+            <div class="header__logo">
+                <h1 class="logo">Дизайнер - тоже программист!!!</h1>
+            </div>
+            <!-- header__block -->
+        </div>
+        <!-- header__wrapper -->
+    </div>
+    <!-- container -->
+</header>
+<section>
+    <div class="body__container">
+        <div class="body__wrapper">
+            <!-- body__wrapper -->
+            <div class="side__menu">
+                <a class="side__menu__link" href="/">главная страница</a>
+                <a class="side__menu__link" href="/demand">востребованность</a>
+                <a class="side__menu__link" href="/geography">география</a>
+                <a class="side__menu__link" href="/skills">навыки</a>
+                <a class="side__menu__link" href="/vacancies">последние вакансии</a>
+            </div>
+
+            <div class="content">
+                <p  class="content__text">
+                    geography
+                </p>
+            </div>
+            <!-- body__wrapper -->
+        </div>
+    </div>
+</section>
+<footer>
+    <p class="footer__text">Зайцев Дмитрий Алексеевич РИ-220932</p>
+</footer>
 </body>
 </html>
