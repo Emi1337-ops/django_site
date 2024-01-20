@@ -1,59 +1,28 @@
-import re
 from decimal import Decimal
-import requests
-import xmltodict
-import openpyxl as op
+import re
 import pandas as pd
 
-date_dict = {}
-def get_valute_valute(charcode, date):
-    if not(date in date_dict.keys()):
-        BASE_URL = 'http://www.cbr.ru/scripts/XML_daily.asp?date_req='
-        response = requests.get(f"{BASE_URL}01/{date}")
-        tree = xmltodict.parse(response.content)
-        tree = tree['ValCurs'];
-        tree = tree['Valute'];
-        date_dict[date] = tree
-    vac = [x for x in date_dict[date] if x['CharCode'] == charcode]
-    if len(vac) > 0:
-        valute = vac[0]['Value']
-    else:
-        valute = '1'
-    return float(valute.replace(',', '.'))
+def get_mid_salary(vacancies):
+    vacancies = vacancies[[x != 0 for x in vacancies['mid_salary']]].reset_index()
+    return vacancies[['mid_salary', 'published_at']].groupby(['published_at']).mean().reset_index()
+
+def get_tables(csv):
+    #получаем таблицу из csv и добавляем заголовок
+    vacancies = pd.read_csv(csv)
+
+    #получаем средние зарплаты по годам
+    time_parse = lambda x: re.sub(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\+(\d{4})", r"\1", x)
+    vacancies.loc[:, 'published_at'] = vacancies['published_at'].apply(time_parse)
+    d = Decimal
+    mid_sal = get_mid_salary(vacancies)
+    year_count = vacancies[['published_at', 'mid_salary']].groupby(['published_at']).count().reset_index()
+    mid_sal.loc[:, 'mid_salary'] = mid_sal['mid_salary'].apply(lambda x: d(x).quantize(d("1")))
+    mid_sal.insert(loc=2, column='year_count', value=year_count[['mid_salary']])
+    return mid_sal
 
 
-def is_vac_get_name(vacancy):
-    vacancy_names = ['design', 'UX' ,'UI','дизайн', 'иллюстратор']
-    for name in vacancy_names:
-        if name in vacancy:
-            return True
-    return False
-
-def get_mid(x, y):
-    if (0 in [x, y]):
-        return x + y
-    return (x + y)/2
-
-def get_mid_salary(vacancy):
-    value = get_mid(float(vacancy[2]), float(vacancy[3]))
-    date = vacancy[6]
-    currency = vacancy[4]
-    if not(currency in [0, 'RUR']):
-        time_parse = lambda x: re.sub(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\+(\d{4})", r"\2/\1", x)
-        value *= get_valute_valute(currency, time_parse(date))
-    return value
-
-
-
-big_vacancies = pd.read_csv('big_vacancies.csv')
-big_vacancies = big_vacancies.fillna(0)
-
-mid_salaries = [get_mid_salary(x) for x in big_vacancies.values]
-big_vacancies.insert(loc=3, column='mid_salary', value=mid_salaries)
-pd.DataFrame(big_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\true_big_vacancies.csv', index=False)
-vacancies = big_vacancies[[is_vac_get_name(name) for name in big_vacancies['name']]].reset_index()
-vacancies = vacancies.drop(columns=['index'])
-
-
-
-#pd.DataFrame(vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\vacancies.csv', index=False)
+all_vacancies = get_tables('notmal_alll_rub_vacancies.csv')
+vacancies = get_tables('ux_vacancies.csv')
+print(2)
+pd.DataFrame(all_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\demand_all_vacancies.csv', index=False)
+pd.DataFrame(vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\demand_ux_vacancies.csv', index=False)
