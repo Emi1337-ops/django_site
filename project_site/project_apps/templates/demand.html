@@ -33,9 +33,16 @@
             </div>
 
             <div class="content">
-                {{ demand_all_vacancies |safe }}
-
-                {{ demand_ux_vacancies |safe }}
+                <div class="demand__stat">
+                    {{ demand_all_vacancies |safe }}
+                    {{ demand_ux_vacancies |safe }}
+                </div>
+                <div class="demand__graph">
+                    <img class="img__for__stat" src="{% static 'img/demand/demand_all_sal.png' %}">
+                    <img class="img__for__stat" src="{% static 'img/demand/demand_ux_sal.png' %}">
+                    <img class="img__for__stat" src="{% static 'img/demand/demand_all_vac.png' %}">
+                    <img class="img__for__stat" src="{% static 'img/demand/demand_ux_vac.png' %}">
+                </div>
             </div>
             <!-- body__wrapper -->
         </div>

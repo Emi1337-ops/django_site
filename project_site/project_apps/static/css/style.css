@@ -61,6 +61,7 @@ body {
 }
 
 .side__menu {
+    position: fixed;
     display: inline-flex;
     padding: 25px 30px;
     flex-direction: column;
@@ -70,16 +71,38 @@ body {
 }
 
 .content {
-    padding: 45px;
-    min-height: 600px;
-    width: 100%;
     display:flex;
-    flex-direction: row;
+    padding: 45px;
+    padding-left: 340px;
+    min-height: 700px;
+    width: 100%;
+    flex-direction: column;
     justify-content: space-between;
     gap: 20px;
 }
 
+.demand__stat {
+    width: 100%;
+    flex-direction: row;
+    display:flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+demand__graph {
+    flex-direction: row;
+    display:flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.img__for__stat {
+    width: 100%;
+}
+
+
 .content__text {
+    display:flex;
     text-align: justify;
     color: black;
     font-size: 25px;
@@ -138,6 +161,7 @@ td {
 
 .geo_content {
     padding: 45px;
+    padding-left: 340px;
     min-height: 600px;
     width: 100%;
     display:flex;
@@ -154,6 +178,38 @@ td {
     gap: 20px;
 }
 
+.geo_all_img_stat {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.geo_all_img{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    gap: 50px;
+}
+
+.geo_ux_img_stat {
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.geo_ux_img{
+    flex-direction: column;
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    gap: 50px;
+}
+
 .geo_ux_vacancies{
     width: 100%;
     display:flex;
@@ -164,6 +220,7 @@ td {
 
 .skills_content {
     padding: 45px;
+    padding-left: 340px;
     min-height: 600px;
     width: 100%;
     display:flex;

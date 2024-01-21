@@ -33,14 +33,28 @@
             </div>
 
             <div class="geo_content">
-                <div class="geo_all_vacancies">
-                    {{ geography_areacount_all_vacancies |safe }}
-                    {{ geography_midsal_all_vacancies |safe }}
+                <div class="geo_all_img_stat">
+                    <div class="geo_all_vacancies">
+                        {{ geography_areacount_all_vacancies |safe }}
+                        {{ geography_midsal_all_vacancies |safe }}
+                    </div>
+                    <div class="geo_all_img">
+                        <img class="img__for__stat" src="{% static 'img/geography/geo_vac_all.png' %}">
+                        <img class="img__for__stat" src="{% static 'img/geography/geo_midsal_all.png' %}">
+                    </div>
                 </div>
-                <div class="geo_ux_vacancies">
+
+                <div class="geo_ux_img_stat">
+                    <div class="geo_ux_vacancies">
                     {{ geography_areacount_ux_vacancies |safe }}
                     {{ geography_midsal_ux_vacancies |safe }}
+                    </div>
+                    <div class="geo_ux_img">
+                        <img class="img__for__stat" src="{% static 'img/geography/geo_vac_ux.png' %}">
+                        <img class="img__for__stat" src="{% static 'img/geography/geo_midsal_ux.png' %}">
+                    </div>
                 </div>
+
             </div>
             <!-- body__wrapper -->
         </div>
