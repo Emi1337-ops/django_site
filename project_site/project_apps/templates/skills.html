@@ -32,10 +32,9 @@
                 <a class="side__menu__link" href="/vacancies">последние вакансии</a>
             </div>
 
-            <div class="content">
-                <p  class="content__text">
-                    skills
-                </p>
+            <div class="skills_content">
+                {{ skills_all_vacancies |safe }}
+                {{ skills_ux_vacancies |safe }}
             </div>
             <!-- body__wrapper -->
         </div>

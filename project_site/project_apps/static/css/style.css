@@ -57,13 +57,12 @@ body {
 
 .body__wrapper {
     display: flex;
-    height: 1000px;
     flex-direction: row;
 }
 
 .side__menu {
     display: inline-flex;
-    padding: 45px 50px;
+    padding: 25px 30px;
     flex-direction: column;
     gap: 20px;
     border-right: solid lightgray;
@@ -72,7 +71,12 @@ body {
 
 .content {
     padding: 45px;
+    min-height: 600px;
     width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 .content__text {
@@ -85,8 +89,7 @@ body {
 footer {
     align-items: center;
     width: 100%;
-    margin:0 auto;
-    height: 60px;
+    height: 60px;;
     display: flex;
     background-color: #303b44;
     align-items: center;
@@ -98,6 +101,90 @@ footer {
     color: #F5F5F5;
     font-size: 23px;
     font-weight: 300;
+}
+
+
+table, th, td {
+  border: 1px solid;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+table {
+    width:100%;
+}
+
+caption{
+    color: grey;
+    font-size: 26px;
+    font-weight: 500px;
+}
+
+th {
+    padding: 18px;
+    color: white;
+    background-color: black;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+td {
+    background-color: #f3f3f3;
+    padding: 9px;
+    font-weight: 300;
+    font-size: 18px;
+    min-width: 60px;
+}
+
+.geo_content {
+    padding: 45px;
+    min-height: 600px;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.geo_all_vacancies{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.geo_ux_vacancies{
+    width: 100%;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.skills_content {
+    padding: 45px;
+    min-height: 600px;
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+
+.skills_body {
+}
+
+.skills_td {
+    padding: 0px;
+    font-size: 14px;
+}
+
+.skills_th {
+    padding:2px;
+    font-size: 16px;
+
 }
 
 
