@@ -4,7 +4,7 @@ from django.db import models
 
 #Demand------------------------------------------------------
 class Demand_All_Vacancies(models.Model):
-    published_at = models.FloatField("Год")
+    published_at = models.IntegerField("Год")
     mid_salary = models.IntegerField("Средняя зп")
     year_count = models.IntegerField("Кол-во вакансий")
 
@@ -15,7 +15,7 @@ class Demand_All_Vacancies(models.Model):
         verbose_name = "Востребованность по всем Профессиям"
 
 class Demand_UX_Vacancies(models.Model):
-    published_at = models.FloatField("Год")
+    published_at = models.IntegerField("Год")
     mid_salary = models.IntegerField("Средняя зп")
     year_count = models.IntegerField("Кол-во вакансий")
 
@@ -37,6 +37,7 @@ class Geography_AreaCount_All_Vacancies(models.Model):
     class Meta:
         verbose_name = "География Доля Вакансий по всем Профессиям"
 
+
 class Geography_MidSalary_All_Vacancies(models.Model):
     area_name = models.CharField("Город", max_length=64)
     mid_salary = models.IntegerField("Средняя зп")
@@ -47,6 +48,7 @@ class Geography_MidSalary_All_Vacancies(models.Model):
     class Meta:
         verbose_name = "География Уровень Зарплат по всем Профессиям"
 
+
 class Geography_AreaCount_UX_Vacancies(models.Model):
     area_name = models.CharField("Город", max_length=64)
     mid_salary = models.FloatField("Доля вакансий")
@@ -56,6 +58,7 @@ class Geography_AreaCount_UX_Vacancies(models.Model):
 
     class Meta:
         verbose_name = "География Доля Вакансий по UX"
+
 
 class Geography_MidSalary_UX_Vacancies(models.Model):
     area_name = models.CharField("Город", max_length=64)
