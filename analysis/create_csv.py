@@ -49,16 +49,17 @@ def get_mid_salary(vacancy):
 
 
 
-# big_vacancies = pd.read_csv('alll_notrub_vacancies.csv')
-# big_vacancies = big_vacancies.fillna(0)
-# mid_salaries = [get_mid_salary(x) for x in big_vacancies.values]
-# big_vacancies.insert(loc=3, column='mid_salary', value=mid_salaries)
-#pd.DataFrame(big_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\alll_rub_vacancies.csv', index=False)
+big_vacancies = pd.read_csv('vacancies.csv')
+big_vacancies = big_vacancies.fillna(0)
 
+mid_salaries = [get_mid_salary(x) for x in big_vacancies.values]
+big_vacancies.insert(loc=3, column='mid_salary', value=mid_salaries)
+# pd.DataFrame(big_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\all_rub_vacancies.csv', index=False)
+#
 # big_vacancies = pd.read_csv('alll_rub_vacancies.csv')
-# big_vacancies = big_vacancies[[is_normal_salary(vacancy) for vacancy in big_vacancies['mid_salary']]].reset_index()
-# big_vacancies = big_vacancies.drop(columns=['index'])
-# pd.DataFrame(big_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\notmal_alll_rub_vacancies.csv', index=False)
+big_vacancies = big_vacancies[[is_normal_salary(vacancy) for vacancy in big_vacancies['mid_salary']]].reset_index()
+big_vacancies = big_vacancies.drop(columns=['index'])
+pd.DataFrame(big_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\all_rub_vacancies.csv', index=False)
 
 big_vacancies = pd.read_csv('notmal_alll_rub_vacancies.csv')
 vacancies = big_vacancies[[is_vac_get_name(name) for name in big_vacancies.values]].reset_index()

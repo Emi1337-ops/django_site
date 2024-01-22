@@ -24,14 +24,14 @@ def get_tables(csv):
     return skills_dict
 
 
-all_vacancies = get_tables('notmal_alll_rub_vacancies.csv')
+all_vacancies = get_tables('all_rub_vacancies.csv')
 for year in all_vacancies.items():
     all_vacancies[year[0]] = [x[0] for x in sorted(year[1].items(), key=lambda x:-x[1])[:20]]
 
-ux_vacancies = get_tables('ux_vacancies.csv')
-for year in ux_vacancies.items():
-    ux_vacancies[year[0]] = [x[0] for x in sorted(year[1].items(), key=lambda x:-x[1])[:20]]
+# ux_vacancies = get_tables('ux_vacancies.csv')
+# for year in ux_vacancies.items():
+#     ux_vacancies[year[0]] = [x[0] for x in sorted(year[1].items(), key=lambda x:-x[1])[:20]]
 
-pd.DataFrame(all_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\geography_midsal_all_vacancies.csv', index=True)
-pd.DataFrame(ux_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\geography_areacount_all_vacancies.csv', index=True)
+pd.DataFrame(all_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\skills_all_vacancies.csv', index=True)
+# pd.DataFrame(ux_vacancies).to_csv(r'c:\Users\dima0\PycharmProjects\project_site\analysis\geography_areacount_all_vacancies.csv', index=True)
 

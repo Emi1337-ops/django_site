@@ -72,7 +72,7 @@ body {
 
 .content {
     display:flex;
-    padding: 45px;
+    padding: 20px 45px;
     padding-left: 340px;
     min-height: 700px;
     width: 100%;
@@ -89,8 +89,12 @@ body {
     gap: 20px;
 }
 
-demand__graph {
-    flex-direction: row;
+.text_bold {
+    font-weight: 600;
+}
+
+.demand__graph {
+    flex-direction: column;
     display:flex;
     justify-content: space-between;
     gap: 20px;
@@ -103,6 +107,7 @@ demand__graph {
 
 .content__text {
     display:flex;
+    flex-direction: column;
     text-align: justify;
     color: black;
     font-size: 25px;
@@ -160,7 +165,7 @@ td {
 }
 
 .geo_content {
-    padding: 45px;
+    padding: 20px 45px;
     padding-left: 340px;
     min-height: 600px;
     width: 100%;
@@ -219,7 +224,7 @@ td {
 }
 
 .skills_content {
-    padding: 45px;
+    padding: 20px 45px;
     padding-left: 340px;
     min-height: 600px;
     width: 100%;
