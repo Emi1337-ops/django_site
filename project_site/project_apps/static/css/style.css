@@ -52,6 +52,7 @@ body {
 
 .body__container {
     align-items: center;
+    min-height: 90vh;
     margin:0 auto;
 }
 
@@ -74,7 +75,6 @@ body {
     display:flex;
     padding: 20px 45px;
     padding-left: 340px;
-    min-height: 700px;
     width: 100%;
     flex-direction: column;
     justify-content: space-between;
@@ -249,5 +249,20 @@ td {
 
 }
 
+.hh_vacancies {
+    font-sixe: 18px;
+}
 
+.1hh_th {
+    padding: 14px;
+    color: white;
+    background-color: black;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.hh_td {
+    font-size: 14px;
+    text-align: left;
+}
 

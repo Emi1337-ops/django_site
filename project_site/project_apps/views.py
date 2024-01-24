@@ -1,11 +1,58 @@
-import csv
-import os
+import re
 
-import pandas as pd
+import requests
 from django.shortcuts import render
 import project_apps.models as models
 import project_apps.csvs as csvs
 from django.templatetags.static import static
+
+def get_mid(salary):
+    if salary == None:
+        return 'Нет информации по зарплате'
+
+    #salary = salary.fillna(0)
+    sfrom = salary['from']
+    sto = salary['to']
+    cur = salary['currency']
+    if sfrom is None:
+        smid = sto
+    elif sto is None:
+        smid = sfrom
+    else:
+        smid = (sfrom + sto)/2
+    return str(int(smid)) +' '+ cur
+
+def get_hh_vacancies():
+    BASE_URL = 'https://api.hh.ru/vacancies'
+    params = {
+        'text': 'UI',
+        'period': 1,
+        'order_by': 'publication_time'
+    }
+    response = requests.get(f"{BASE_URL}", params=params)
+    vacancies = response.json()
+
+    delete_HTML = lambda x: re.sub(r"<[^<>]*>", "", x)
+    crop_text = lambda x: x[:100]+'...' if len(x) > 30 else x
+    time_parse = lambda x: re.sub(r"(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})\+(\d{4})", r"\3/\2/\1", x)
+    skills_fill = lambda x: 'Нет информации о навыках' if len(x) == 0 else x;
+
+    id_list = []
+    [id_list.append(id['id']) for id in list(vacancies.items())[0][1]]
+    vac_list =[]
+    for id in id_list:
+        response = requests.get(f"{BASE_URL}/{id}")
+        vac = response.json()
+        vacancy = ([vac['name'],
+                         crop_text(delete_HTML(vac['description'])),
+                         skills_fill((', ').join([skill['name'] for skill in vac['key_skills']])),
+                         vac['employer']['name'],
+                         get_mid(vac['salary']),
+                         vac['area']['name'],
+                         time_parse(vac['published_at']),])
+        if ("UI" in vacancy[0] or "UI" in vacancy[2]):
+            vac_list.append(vacancy)
+    return vac_list[:10]
 
 
 # Create your views here.
@@ -40,75 +87,6 @@ def demand_page(request):
     ux += '</tbody></table>'
     return render(request, 'demand.html', context={"demand_all_vacancies": all, "demand_ux_vacancies": ux})
 
-# <table class="rtable">
-#   <thead>
-#     <tr>
-#       <th>Browser</th>
-#       <th>Sessions</th>
-#       <th>Percentage</td>
-#       <th>New Users</th>
-#       <th>Avg. Duration</th>
-#     </tr>
-#   </thead>
-#   <tbody>
-#     <tr>
-#       <td>Chrome</td>
-#       <td>9,562</td>
-#       <td>68.81%</td>
-#       <td>7,895</td>
-#       <td>01:07</td>
-#     </tr>
-#     <tr>
-#       <td>Firefox</td>
-#       <td>2,403</td>
-#       <td>17.29%</td>
-#       <td>2,046</td>
-#       <td>00:59</td>
-#     </tr>
-#     <tr>
-#       <td>Safari</td>
-#       <td>1,089</td>
-#       <td>2.63%</td>
-#       <td>904</td>
-#       <td>00:59</td>
-#     </tr>
-#     <tr>
-#       <td>Internet Explorer</td>
-#       <td>366</td>
-#       <td>2.63%</td>
-#       <td>333</td>
-#       <td>01:01</td>
-#     </tr>
-#     <tr>
-#       <td>Safari (in-app)</td>
-#       <td>162</td>
-#       <td>1.17%</td>
-#       <td>112</td>
-#       <td>00:58</td>
-#     </tr>
-#     <tr>
-#       <td>Opera</td>
-#       <td>103</td>
-#       <td>0.74%</td>
-#       <td>87</td>
-#       <td>01:22</td>
-#     </tr>
-#     <tr>
-#       <td>Edge</td>
-#       <td>98</td>
-#       <td>0.71%</td>
-#       <td>69</td>
-#       <td>01:18</td>
-#     </tr>
-#     <tr>
-#       <td>Other</td>
-#       <td>275</td>
-#       <td>6.02%</td>
-#       <td>90</td>
-#       <td>N/A</td>
-#     </tr>
-#   </tbody>
-# </table>
 def geography_page(request):
     #all---------------------------
     vacancies = models.Geography_AreaCount_All_Vacancies.objects.all()
@@ -204,7 +182,34 @@ def skills_page(request):
     return render(request, 'skills.html', context={"skills_all_vacancies": alls, "skills_ux_vacancies": ux})
 
 def vacancies_page(request):
-    return render(request, 'vacancies.html')
+    vacancies = get_hh_vacancies()
+    # s = ''
+    # for vacancy in vacancies:
+    #     s+=f'<p>{vacancy}</p>'
+
+    table = '<table class="hh_vacancies">'
+    table += '<caption>Вакансии UX/UI дизайнера за последние 24 часа</caption>'
+    table += '<thead><tr>'
+    table += '<th class="hh_th">Название</th>'
+    table += '<th class="hh_th">Описание професии</th>'
+    table += '<th class="hh_th">Навыки</th>'
+    table += '<th class="hh_th">Компания</th>'
+    table += '<th class="hh_th">Оклад</th>'
+    table += '<th class="hh_th">Название региона</th>'
+    table += '<th class="hh_th">Дата публикации</th>'
+    table += '</tr></thead>'
+    table += '<tbody>'
+    for vacancy in vacancies:
+        table += "<tr>"
+        for i in range(len(vacancy)):
+            if i in [1, 2]:
+                table += f"<td class='hh_td'>{vacancy[i]}</td>"
+            else:
+                table += f"<td>{vacancy[i]}</td>"
+        table += "</tr>"
+    table += '</tbody></table>'
+    return render(request, 'vacancies.html', context={'hh_vacancies': table})
+
 
 
 # demand_All_Vacancies = []
