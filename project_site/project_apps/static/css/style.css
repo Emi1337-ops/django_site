@@ -81,6 +81,15 @@ body {
     gap: 20px;
 }
 
+.text__content {
+    display:flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+
 .demand__stat {
     width: 100%;
     flex-direction: row;
@@ -104,14 +113,30 @@ body {
     width: 100%;
 }
 
+.main__header {
+    text-align: center;
+    padding: 0;
+    font-size: 32px;
+    font-weight: 600;
+}
 
 .content__text {
-    display:flex;
+    margin: 0;
     flex-direction: column;
     text-align: justify;
     color: black;
     font-size: 25px;
     font-weight: 400;
+}
+
+ul {
+    color: black;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+li {
+    padding: 5px;
 }
 
 footer {

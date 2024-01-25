@@ -10,7 +10,6 @@ def get_mid(salary):
     if salary == None:
         return 'Нет информации по зарплате'
 
-    #salary = salary.fillna(0)
     sfrom = salary['from']
     sto = salary['to']
     cur = salary['currency']
